@@ -22,8 +22,13 @@ module.exports = function (app) {
     const string = convertHandler.getString(num, unit, returnNum, returnUnit);
 
 
+    if( unit == 'invalid unit'){
+      const error = new Error('invalid unit');
+      error.stack = 'Error thrown from my code';
 
-    if(num == NaN){      
+      res.send(error.message)
+      
+    } else if(num == NaN){      
       const error = new Error('invalid number');
       error.stack = 'Error thrown from my code';
 

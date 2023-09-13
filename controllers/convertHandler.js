@@ -3,7 +3,7 @@ function ConvertHandler() {
   this.getNum = function(input) {
     let result;
     
-    if( input.match(/\d+\.\d+|\d+\/\d+|\d+/) ){
+    if( input.match(/\d+\.\d+|\d+\/\d+|\d+/) ){ 
 
       if(input.match(/\d+\/\d+\/\d+/)){ // more than one fraction 1/2/3
         return NaN
@@ -27,19 +27,39 @@ function ConvertHandler() {
         result = Number(input.match(/\d+\.\d+|\d+\/\d+|\d+/))
       }
       
-    } else {
+    }
+    else {
       result = 1
     }
+    
 
     
     
     return result;
   };
+
   
   this.getUnit = function(input) {
     let result;
     
-    //result = input
+    if( !input ){
+      result = 'invalid unit'
+    }
+    else if( input.match(/(\d+\.\d+|\d+\/\d+|\d+)+(gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG)/) ){ 
+      /*
+      const decimal = input.match(/\d+\.\d+/)[0]
+      const fraction = input.match(/\d+\/\d+/)[0]
+      const integer = input.match(/\d+/)[0]
+      */
+
+      result = input.match(/gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG/)[0]
+      
+    } else if( input=="gal" || input=="GAL" || input=="l" || input=="L" || input=="mi" || input=="MI" || input=="km" || input=="KM" || input=="lbs" || input=="LBS" || input=="kg" ||  input=="KG" ){
+      result = input
+    } else {
+      result = 'invalid unit'
+    }
+    
 
     return result;
   };
