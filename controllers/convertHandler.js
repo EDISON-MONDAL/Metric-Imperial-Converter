@@ -47,9 +47,9 @@ function ConvertHandler() {
     if(!input){
       result = 'invalid unit'
     }
-    else if( input.match(/(\d+\.\d+|\d+\/\d+|\d+)+(gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG)/) ){ 
+    else if( input.match(/(\d+\.\d+|\d+\/\d+|\d+)+(gal|GAL|mi|MI|km|KM|lbs|LBS|l|L|kg|KG)/) ){ 
       
-      const data = input.match(/gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG/)[0]   
+      const data = input.match(/gal|GAL|mi|MI|km|KM|lbs|LBS|l|L|kg|KG/)[0]   
       if(data == 'l' || data == 'L'){
         result = data.toUpperCase()
       } else {
@@ -131,20 +131,6 @@ function ConvertHandler() {
 
     if( initUnit=="gal" || initUnit=="GAL" ){
       result = parseFloat((galToL * initNum).toFixed(5))
-
-      
-      /*
-      const num1 = result
-      const num2 = Math.round(result);
-      
-      const tolerance = 0.01; // Define your desired tolerance here
-      
-      if (areNumbersEqualWithTolerance(num1, num2, tolerance)) {
-        // The numbers are considered equal within the tolerance
-        result = Math.round(result)
-      } // The numbers are not considered equal within the tolerance
-      */
-
     } else if( initUnit=="l" || initUnit=="L" ){
       result = parseFloat((initNum / galToL).toFixed(5))
     } else if( initUnit=="mi" || initUnit=="MI"  ){
