@@ -36,7 +36,9 @@ module.exports = function (app) {
       res.status(400).json({ error: 'invalid unit' });
       
     }
-     else {  
+     else {
+      
+      console.log('return '+ returnNum)
 
       // Prepare the response JSON
       const response = {
