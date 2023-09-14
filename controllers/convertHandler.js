@@ -49,20 +49,11 @@ function ConvertHandler() {
     }
     else if( input.match(/(\d+\.\d+|\d+\/\d+|\d+)+(gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG)/) ){ 
       
-      const data = input.match(/gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG/)[0]
-
-      if( data=="l" ){
-        result = 'L'
-      } else {
-        result = data
-      }
+      result = input.match(/gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG/)[0]      
       
     } else if( input=="gal" || input=="GAL" || input=="l" || input=="L" || input=="mi" || input=="MI" || input=="km" || input=="KM" || input=="lbs" || input=="LBS" || input=="kg" ||  input=="KG" ){
-      if( input=="l" ){
-        result = 'L'
-      } else {
-        result = input
-      }
+      
+      result = input
       
       
     } else {
