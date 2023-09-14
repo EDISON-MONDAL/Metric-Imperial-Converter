@@ -125,9 +125,9 @@ function ConvertHandler() {
     let result;
 
     if( initUnit=="gal" || initUnit=="GAL" ){
-      result = (galToL * initNumParsed).toFixed(5)
+      result = galToL * initNumParsed
     } else if( initUnit=="l" || initUnit=="L" ){
-      result = (LTogal * initNumParsed).toFixed(5)
+      result = LTogal * initNumParsed
     } else if( initUnit=="mi" || initUnit=="MI"  ){
       result = miToKm * initNumParsed
     } else if ( initUnit=="km" || initUnit=="KM" ){
