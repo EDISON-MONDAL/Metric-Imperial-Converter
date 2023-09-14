@@ -50,15 +50,19 @@ function ConvertHandler() {
     else if( input.match(/(\d+\.\d+|\d+\/\d+|\d+)+(gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG)/) ){ 
       
       const data = input.match(/gal|GAL|l|L|mi|MI|km|KM|lbs|LBS|kg|KG/)[0]   
-      if(data == 'l'){
+      if(data == 'l' || data == 'L'){
         result = data.toUpperCase()
-      } else result = input
+      } else {
+        result = input
+      }
       
     } else if( input=="gal" || input=="GAL" || input=="l" || input=="L" || input=="mi" || input=="MI" || input=="km" || input=="KM" || input=="lbs" || input=="LBS" || input=="kg" ||  input=="KG" ){
       
-      if( input=="l"){
+      if( input == 'l' || input == 'L'){
         result = input.toUpperCase()
-      } else result = input
+      } else {
+        result = input
+      }
       
       
     } else {
@@ -120,10 +124,46 @@ function ConvertHandler() {
     const kmTomi = 0.62137;
     let result;
 
+    // check tolerance
+    function areNumbersEqualWithTolerance(a, b, tolerance) {
+      return Math.abs(a - b) <= tolerance;
+    }
+
+
+
+
     if( initUnit=="gal" || initUnit=="GAL" ){
       result = parseFloat((galToL * initNum).toFixed(5))
+
+      
+      
+      const num1 = result
+      const num2 = Math.round(result);
+      
+      const tolerance = 0.01; // Define your desired tolerance here
+      
+      if (areNumbersEqualWithTolerance(num1, num2, tolerance)) {
+        // The numbers are considered equal within the tolerance
+        result = Math.round(result)
+      } // The numbers are not considered equal within the tolerance
+
+
     } else if( initUnit=="l" || initUnit=="L" ){
       result = parseFloat((LTogal * initNum).toFixed(5))
+
+      
+      
+      const num1 = result
+      const num2 = Math.round(result);
+      
+      const tolerance = 0.01; // Define your desired tolerance here
+      
+      if (areNumbersEqualWithTolerance(num1, num2, tolerance)) {
+        // The numbers are considered equal within the tolerance
+        result = Math.round(result)
+      } // The numbers are not considered equal within the tolerance
+
+
     } else if( initUnit=="mi" || initUnit=="MI"  ){
       result = miToKm * initNum
     } else if ( initUnit=="km" || initUnit=="KM" ){
