@@ -53,6 +53,7 @@
               $('#result').text(data.string || data);
               $('#jsonResult').text(JSON.stringify(data));
             },
+            /*
             error: function(jqXHR, textStatus, errorThrown) {
               // Handle errors, including status code 400
               if (jqXHR.status === 400) {
@@ -72,6 +73,7 @@
                 console.error('An error occurred: ' + textStatus + ', ' + errorThrown);
               }
             }
+            */
           });
         });
       });
