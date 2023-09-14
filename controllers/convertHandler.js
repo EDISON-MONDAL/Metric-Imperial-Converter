@@ -117,11 +117,11 @@ function ConvertHandler() {
     const initNumParsed = Number(initNum)
 
     const galToL = 3.78541;
-    const LTogal = 0.26417;
+    //const LTogal = 0.26417;
     const lbsToKg = 0.453592;
-    const kgTolbs = 2.20462;
+    //const kgTolbs = 2.20462;
     const miToKm = 1.60934;
-    const kmTomi = 0.62137;
+    //const kmTomi = 0.62137;
     let result;
 
     // check tolerance
@@ -136,7 +136,7 @@ function ConvertHandler() {
       result = parseFloat((galToL * initNum).toFixed(5))
 
       
-      
+      /*
       const num1 = result
       const num2 = Math.round(result);
       
@@ -146,24 +146,10 @@ function ConvertHandler() {
         // The numbers are considered equal within the tolerance
         result = Math.round(result)
       } // The numbers are not considered equal within the tolerance
-
+      */
 
     } else if( initUnit=="l" || initUnit=="L" ){
-      result = parseFloat((LTogal * initNum).toFixed(5))
-
-      
-      
-      const num1 = result
-      const num2 = Math.round(result);
-      
-      const tolerance = 0.01; // Define your desired tolerance here
-      
-      if (areNumbersEqualWithTolerance(num1, num2, tolerance)) {
-        // The numbers are considered equal within the tolerance
-        result = Math.round(result)
-      } // The numbers are not considered equal within the tolerance
-
-
+      result = parseFloat((initNum / galToL).toFixed(5))
     } else if( initUnit=="mi" || initUnit=="MI"  ){
       result = miToKm * initNum
     } else if ( initUnit=="km" || initUnit=="KM" ){
