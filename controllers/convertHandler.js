@@ -1,4 +1,17 @@
 function ConvertHandler() {
+  function breakInp(inp){
+    
+    let breakPoint = inp.indexOf("l")
+    if(breakPoint>0){
+    breakPoint--
+    }
+    let num = inp.slice(0, breakPoint);
+    let str = inp.slice(inp.indexOf("l"));
+
+    return {num: num, str: str}
+  }
+
+
   
   this.getNum = function(input) {
     let result;
@@ -43,6 +56,7 @@ function ConvertHandler() {
   
   this.getUnit = function(input) {
     let result;
+    const unitText = breakInp(input)['str']
     
     if(!input){
       result = 'invalid unit'
@@ -70,7 +84,7 @@ function ConvertHandler() {
     }
 
     
-    return result;
+    return unitText;
   };
   
   this.getReturnUnit = function(initUnit) {

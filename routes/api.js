@@ -22,6 +22,9 @@ module.exports = function (app) {
     const string = convertHandler.getString(num, unit, returnNum, returnUnit);
 
 
+    console.log('lllllllllll '+ unit)
+
+
     if(unit == 'invalid unit' && isNaN(num) ){
       console.log(num + ' ok num ' + unit + ' ok unit')
       
