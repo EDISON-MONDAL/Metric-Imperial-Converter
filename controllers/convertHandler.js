@@ -152,9 +152,9 @@ function ConvertHandler() {
     } else if ( initUnit=="km" || initUnit=="KM" ){
       result = parseFloat((initNum / miToKm).toFixed(5))
     } else if ( initUnit=="lbs" || initUnit=="LBS" ){
-      result = lbsToKg * initNum
+      result = parseFloat((lbsToKg * initNum).toFixed(6))
     } else if( initUnit=="kg" ||  initUnit=="KG" ){
-      result = initNum / lbsToKg
+      result = parseFloat((initNum / lbsToKg).toFixed(6))
     }
     
     return result;
