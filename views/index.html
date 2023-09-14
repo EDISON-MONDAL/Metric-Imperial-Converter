@@ -54,24 +54,24 @@
               $('#jsonResult').text(JSON.stringify(data));
             },
             error: function(jqXHR, textStatus, errorThrown) {
-    // Handle errors, including status code 400
-    if (jqXHR.status === 400) {
-      // Parse the response JSON to access the error message
-      var responseJSON = jqXHR.responseJSON;
-      if (responseJSON && responseJSON.error) {
-        var errorMessage = responseJSON.error;
-        console.error(errorMessage);
+              // Handle errors, including status code 400
+              if (jqXHR.status === 400) {
+                // Parse the response JSON to access the error message
+                var responseJSON = jqXHR.responseJSON;
+                if (responseJSON && responseJSON.error) {
+                  var errorMessage = responseJSON.error;
+                  console.error(errorMessage);
 
-        // You can display the error message in your UI here
-        // For example, you can append it to a div element with an ID "error-container"
-        $('#result').text(errorMessage);
-        $('#jsonResult').text(JSON.stringify(errorMessage));
-      }
-    } else {
-      // Handle other types of errors
-      console.error('An error occurred: ' + textStatus + ', ' + errorThrown);
-    }
-  }
+                  // You can display the error message in your UI here
+                  // For example, you can append it to a div element with an ID "error-container"
+                  $('#result').text(errorMessage);
+                  $('#jsonResult').text(JSON.stringify(errorMessage));
+                }
+              } else {
+                // Handle other types of errors
+                console.error('An error occurred: ' + textStatus + ', ' + errorThrown);
+              }
+            }
           });
         });
       });
