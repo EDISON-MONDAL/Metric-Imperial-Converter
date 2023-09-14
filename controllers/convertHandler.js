@@ -153,7 +153,7 @@ function ConvertHandler() {
     } else if( initUnit=="mi" || initUnit=="MI"  ){
       result = miToKm * initNum
     } else if ( initUnit=="km" || initUnit=="KM" ){
-      result = kmTomi * initNum
+      result = initNum / miToKm
     } else if ( initUnit=="lbs" || initUnit=="LBS" ){
       result = lbsToKg * initNum
     } else if( initUnit=="kg" ||  initUnit=="KG" ){
