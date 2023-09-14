@@ -154,7 +154,7 @@ function ConvertHandler() {
     } else if ( initUnit=="lbs" || initUnit=="LBS" ){
       result = parseFloat((lbsToKg * initNum).toFixed(6))
     } else if( initUnit=="kg" ||  initUnit=="KG" ){
-      result = parseFloat((initNum / lbsToKg).toFixed(6))
+      result = parseFloat((initNum / lbsToKg).toFixed(5))
     }
     
     return result;
