@@ -22,19 +22,21 @@ module.exports = function (app) {
     const string = convertHandler.getString(num, unit, returnNum, returnUnit);
 
 
-    if( unit == 'invalid unit'){
-      const error = new Error('invalid unit');
-      error.stack = 'Error thrown from my code';
-
-      res.send(error.message)
+    if(unit == 'invalid unit' && isNaN(num) ){
       
-    } else if(num == NaN){      
-      const error = new Error('invalid number');
-      error.stack = 'Error thrown from my code';
-
-      res.send(error.message)
-    }else {
-  
+      res.status(400).json({ error: 'invalid number and unit' });
+    }
+    else if( isNaN(num) ){      
+      console.log(num + ' ok num')
+      res.status(400).json({ error: 'invalid number' });
+    }
+    else if( unit == 'invalid unit'){
+      console.log(unit + ' ok unit')
+      
+      res.status(400).json({ error: 'invalid unit' });
+      
+    }
+     else {  
 
       // Prepare the response JSON
       const response = {
