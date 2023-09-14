@@ -133,7 +133,7 @@ function ConvertHandler() {
 
 
     if( initUnit=="gal" || initUnit=="GAL" ){
-      result = parseFloat((galToL * initNum).toFixed(5))
+      result = galToL * initNum
 
       
       /*
@@ -149,7 +149,7 @@ function ConvertHandler() {
       */
 
     } else if( initUnit=="l" || initUnit=="L" ){
-      result = parseFloat((initNum / galToL).toFixed(5))
+      result = initNum / galToL
     } else if( initUnit=="mi" || initUnit=="MI"  ){
       result = miToKm * initNum
     } else if ( initUnit=="km" || initUnit=="KM" ){
