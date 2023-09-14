@@ -53,7 +53,7 @@ function ConvertHandler() {
       if(data == 'l' || data == 'L'){
         result = data.toUpperCase()
       } else {
-        result = input
+        result = data.toLowerCase()
       }
       
     } else if( input=="gal" || input=="GAL" || input=="l" || input=="L" || input=="mi" || input=="MI" || input=="km" || input=="KM" || input=="lbs" || input=="LBS" || input=="kg" ||  input=="KG" ){
@@ -61,7 +61,7 @@ function ConvertHandler() {
       if( input == 'l' || input == 'L'){
         result = input.toUpperCase()
       } else {
-        result = input
+        result = input.toLowerCase()
       }
       
       
