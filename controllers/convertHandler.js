@@ -40,14 +40,8 @@ function ConvertHandler() {
     return result;
   };
 
-  function numberStringSplitter(input) {
-    let number = input.match(/[.\d\/]+/g) || ["1"];
-    let string = input.match(/[a-zA-Z]+/g)[0];
   
-    return [number[0], string];
-  }
   this.getUnit = function(input) {
-    /*
     let result;
     
     if(!input){
@@ -77,24 +71,6 @@ function ConvertHandler() {
 
     
     return result;
-    */
-    let result = numberStringSplitter(input)[1].toLowerCase();
-    switch (result) {
-      case "km":
-        return "km";
-      case "gal":
-        return "gal";
-      case "lbs":
-        return "lbs";
-      case "mi":
-        return "mi";
-      case "l":
-        return "L";
-      case "kg":
-        return "kg";
-      default:
-        return 'invalid unit';
-    }
   };
   
   this.getReturnUnit = function(initUnit) {
