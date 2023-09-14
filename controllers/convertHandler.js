@@ -117,11 +117,8 @@ function ConvertHandler() {
     const initNumParsed = Number(initNum)
 
     const galToL = 3.78541;
-    //const LTogal = 0.26417;
     const lbsToKg = 0.453592;
-    //const kgTolbs = 2.20462;
     const miToKm = 1.60934;
-    //const kmTomi = 0.62137;
     let result;
 
     // check tolerance
@@ -133,7 +130,7 @@ function ConvertHandler() {
 
 
     if( initUnit=="gal" || initUnit=="GAL" ){
-      result = galToL * initNum
+      result = parseFloat((galToL * initNum).toFixed(5))
 
       
       /*
@@ -149,11 +146,11 @@ function ConvertHandler() {
       */
 
     } else if( initUnit=="l" || initUnit=="L" ){
-      result = initNum / galToL
+      result = parseFloat((initNum / galToL).toFixed(5))
     } else if( initUnit=="mi" || initUnit=="MI"  ){
-      result = miToKm * initNum
+      result = parseFloat((miToKm * initNum).toFixed(5))
     } else if ( initUnit=="km" || initUnit=="KM" ){
-      result = initNum / miToKm
+      result = parseFloat((initNum / miToKm).toFixed(5))
     } else if ( initUnit=="lbs" || initUnit=="LBS" ){
       result = lbsToKg * initNum
     } else if( initUnit=="kg" ||  initUnit=="KG" ){
