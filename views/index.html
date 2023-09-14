@@ -65,6 +65,7 @@
         // You can display the error message in your UI here
         // For example, you can append it to a div element with an ID "error-container"
         $('#result').text(errorMessage);
+        $('#jsonResult').text(JSON.stringify(errorMessage));
       }
     } else {
       // Handle other types of errors
