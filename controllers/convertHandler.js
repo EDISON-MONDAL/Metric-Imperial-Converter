@@ -114,13 +114,11 @@ function ConvertHandler() {
     const kmTomi = 0.62137;
     let result;
 
-    if( initUnit=="gal" || initUnit=="GAL" || initUnit=="l" || initUnit=="L" ){
-      if(initUnit=="gal" || initUnit=="GAL"){
-      result = galToL * initNumParsed
-      } else {
-        result = LTogal * initNumParsed
-      }
-    }  else if( initUnit=="mi" || initUnit=="MI"  ){
+    if( initUnit=="gal" || initUnit=="GAL" ){
+      result = (galToL * initNumParsed).toFixed(5)
+    } else if( initUnit=="l" || initUnit=="L" ){
+      result = (LTogal * initNumParsed).toFixed(5)
+    } else if( initUnit=="mi" || initUnit=="MI"  ){
       result = miToKm * initNumParsed
     } else if ( initUnit=="km" || initUnit=="KM" ){
       result = kmTomi * initNumParsed
