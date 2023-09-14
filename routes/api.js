@@ -33,7 +33,10 @@ module.exports = function (app) {
     else if( unit == 'invalid unit'){
       console.log(unit + ' ok unit')
       
-      res.send('invalid unit');            
+      //res.send('invalid unit');
+      
+      res.status(400).json({error: 'invalid unit' })
+      
     }
      else {
       
