@@ -116,17 +116,17 @@ function ConvertHandler() {
     let result;
 
     if( initUnit=="gal" || initUnit=="GAL" ){
-      result = galToL * initNumParsed
+      result = galToL * initNum
     } else if( initUnit=="l" || initUnit=="L" ){
-      result = LTogal * initNumParsed
+      result = LTogal * initNum
     } else if( initUnit=="mi" || initUnit=="MI"  ){
-      result = miToKm * initNumParsed
+      result = miToKm * initNum
     } else if ( initUnit=="km" || initUnit=="KM" ){
-      result = kmTomi * initNumParsed
+      result = kmTomi * initNum
     } else if ( initUnit=="lbs" || initUnit=="LBS" ){
-      result = lbsToKg * initNumParsed
+      result = lbsToKg * initNum
     } else if( initUnit=="kg" ||  initUnit=="KG" ){
-      result = kgTolbs * initNumParsed
+      result = kgTolbs * initNum
     }
     
     return result;
