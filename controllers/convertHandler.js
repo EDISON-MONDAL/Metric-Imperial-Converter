@@ -123,14 +123,7 @@ function ConvertHandler() {
     const miToKm = 1.60934;
     let result;
 
-    // check tolerance
-    function areNumbersEqualWithTolerance(a, b, tolerance) {
-      return Math.abs(a - b) <= tolerance;
-    }
-
-
-
-
+    
     if( initUnit=="gal" || initUnit=="GAL" ){
       result = parseFloat((galToL * initNum).toFixed(5))
     } else if( initUnit=="l" || initUnit=="L" ){
