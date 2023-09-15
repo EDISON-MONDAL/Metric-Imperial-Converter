@@ -28,7 +28,7 @@ module.exports = function (app) {
       res.send('invalid number and unit');
       //res.status(400).json({ error: 'invalid number and unit' });
     }
-    else if( isNaN(num) ){      
+    else if( num == 'invalid number' ){      
       console.log(num + ' ok num')
       res.send('invalid number');
       //res.status(400).json({ error: 'invalid number' });

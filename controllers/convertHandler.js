@@ -33,7 +33,7 @@ function ConvertHandler() {
       }      
       
     } else {
-      num = NaN
+      num = 'invalid number'
     }
 
 
