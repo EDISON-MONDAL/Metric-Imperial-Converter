@@ -35,10 +35,12 @@ function ConvertHandler() {
         num = 'invalid number'
       }
       else if(regex.test(num) == true){ 
-        if(/\d+\.\/\d+\./.test(num) == true || /\d+\.\/\d+/.test(num) == true){
+        if(/\d+\.\/\d+\./.test(num) == true || /\d+\.\/\d+/.test(num) == true || /\d+\/0/.test(num) == true || /0\/\d+/.test(num) == true){
   
           // 5./5. false
           // 5./5  false
+          // 1/0 false
+          // 0/1 false
   
           num = 'invalid number'
         }
