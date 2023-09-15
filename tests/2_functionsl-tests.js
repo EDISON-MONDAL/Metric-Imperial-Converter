@@ -26,7 +26,7 @@ suite('Functional Tests', function() {
         .query({ input: '32g' }) // Invalid unit
         .end(function(err, res) {
           assert.equal(res.status, 200);
-          assert.equal(res.text, 'invalid unit');
+          assert.equal(res.body.error, 'invalid unit');
           done();
         });
     });
@@ -38,7 +38,7 @@ suite('Functional Tests', function() {
         .query({ input: '3/7.2/4kg' }) // Invalid number
         .end(function(err, res) {
           assert.equal(res.status, 200);
-          assert.equal(res.text, 'invalid number');
+          assert.equal(res.body.error, 'invalid number');
           done();
         });
     });
@@ -50,7 +50,7 @@ suite('Functional Tests', function() {
         .query({ input: '3/7.2/4kilomegagram' }) // Invalid number and unit
         .end(function(err, res) {
           assert.equal(res.status, 200);
-          assert.equal(res.text, 'invalid number and unit');
+          assert.equal(res.body.error, 'invalid number and unit');
           done();
         });
     });
