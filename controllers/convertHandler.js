@@ -50,7 +50,7 @@ function ConvertHandler() {
       
     
 
-    return [Number(num), str] 
+    return [num, str] 
   }
 
 
@@ -58,9 +58,11 @@ function ConvertHandler() {
   this.getNum = function(input) {
     
     let result = breakInp(input)[0];
-    // console.log('number rrrrrrrr '+ result)
+    
     if(isNaN(result) ){
       result = 'invalid number'
+    } else {
+      result = Number(result)
     }
     
     return result;
