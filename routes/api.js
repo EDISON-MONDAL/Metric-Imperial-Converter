@@ -23,17 +23,17 @@ module.exports = function (app) {
 
 
     
-    if(unit === 'invalid unit' && num === 'invalid number' ){
+    if(unit == 'invalid unit' && num == 'invalid number' ){
       console.log(num + ' ok num ' + unit + ' ok unit')
       res.send('invalid number and unit');
       //res.status(400).json({ error: 'invalid number and unit' });
     }
-    else if( num === 'invalid number' ){      
+    else if( num == 'invalid number' ){      
       console.log(num + ' ok num')
       res.send('invalid number');
       //res.status(400).json({ error: 'invalid number' });
     }
-    else if( unit === 'invalid unit'){
+    else if( unit == 'invalid unit'){
       console.log(unit + ' ok unit')
       
       res.send('invalid unit');

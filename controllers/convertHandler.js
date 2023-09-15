@@ -114,8 +114,6 @@ function ConvertHandler() {
         result = 'kg'
       } else if( initUnit=="kg" ||  initUnit=="KG" ){
         result = 'lbs'
-      } else {
-        result = 'invalid unit'
       }
           
       return result;
