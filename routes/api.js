@@ -1,65 +1,43 @@
-'use strict';
+/*
+ *
+ *
+ *       Complete the API routing below
+ *
+ *
+ */
 
-const expect = require('chai').expect;
-const ConvertHandler = require('../controllers/convertHandler.js');
+"use strict";
 
+const expect = require("chai").expect;
+const ConvertHandler = require("../controllers/convertHandler.js");
 
 module.exports = function (app) {
-  
   let convertHandler = new ConvertHandler();
 
-  // Define a route for the '/api/convert' endpoint
-  app.get('/api/convert', (req, res) => {
-    // You can access the query parameters using req.query
-    const input = req.query.input;
-    
-    // Implement your conversion logic using the ConvertHandler here
-    // For example:
-    const num = convertHandler.getNum(input);
-    const unit = convertHandler.getUnit(input);
-    const returnNum = convertHandler.convert(num, unit);
-    const returnUnit = convertHandler.getReturnUnit(unit);
-    const string = convertHandler.getString(num, unit, returnNum, returnUnit);
-
-
-    
-    if(unit == 'invalid unit' && num == 'invalid number' ){
-      console.log(num + ' ok num ' + unit + ' ok unit')
-      res.send('invalid number and unit');
-      //res.status(400).json({ error: 'invalid number and unit' });
+  app.route("/api/convert").get(function (req, res) {
+    let input = req.query.input;
+    let initNum = convertHandler.getNum(input);
+    let initUnit = convertHandler.getUnit(input);
+    if (!initNum && !initUnit) {
+      res.send("invalid number and unit");
+      return;
+    } else if (!initNum) {
+      res.send("invalid number");
+      return;
+    } else if (!initUnit) {
+      res.send("invalid unit");
+      return;
     }
-    else if( num == 'invalid number' ){      
-      console.log(num + ' ok num')
-      res.send('invalid number');
-      //res.status(400).json({ error: 'invalid number' });
-    }
-    else if( unit == 'invalid unit'){
-      console.log(unit + ' ok unit')
-      
-      res.send('invalid unit');
-      
-      //res.status(400).json({error: 'invalid unit' })
-      
-    }
-     else {
-      
-      console.log('return '+ returnNum)
+    let returnNum = convertHandler.convert(initNum, initUnit);
+    let returnUnit = convertHandler.getReturnUnit(initUnit);
+    let toString = convertHandler.getString(
+      initNum,
+      initUnit,
+      returnNum,
+      returnUnit
+    );
 
-      // Prepare the response JSON
-      const response = {
-        initNum: num,
-        initUnit: unit,
-        returnNum: returnNum,
-        returnUnit: returnUnit,
-        string: string,
-      };
-
-      // Send the JSON response
-      res.json(response);
-    }
-  
-    
+    //res.json
+    res.json({ initNum, initUnit, returnNum, returnUnit, string: toString });
   });
-  
-
 };
