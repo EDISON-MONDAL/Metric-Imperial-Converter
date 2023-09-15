@@ -1,61 +1,88 @@
-const chaiHttp = require("chai-http");
-const chai = require("chai");
-let assert = chai.assert;
-const server = require("../server");
+/*
+*
+*
+*       FILL IN EACH FUNCTIONAL TEST BELOW COMPLETELY
+*       -----[Keep the tests in the same order!]-----
+*       (if additional are added, keep them at the very end!)
+*/
+
+var chaiHttp = require('chai-http');
+var chai = require('chai');
+var assert = chai.assert;
+var server = require('../server');
 
 chai.use(chaiHttp);
 
-suite("Functional Tests", function () {
-  test("Convert a valid input", (done) => {
-    chai
-      .request(server)
-      .get("/api/convert?input=10l")
-      .end((err, res) => {
-        const data = res.body;
-        assert.equal(2.64172, data.returnNum);
-        assert.equal("gal", data.returnUnit);
+suite('Functional Tests', function() {
+
+  suite('Routing Tests', function() {
+    
+    suite('GET /api/convert => conversion object', function() {
+      
+      test('Convert 10L (valid input)', function(done) {
+       chai.request(server)
+        .get('/api/convert')
+        .query({input: '10L'})
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.equal(res.body.initNum, 10);
+          assert.equal(res.body.initUnit, 'l');
+          assert.approximately(res.body.returnNum, 2.64172, 0.1);
+          assert.equal(res.body.returnUnit, 'gal');
+          done();
+        });
+      });
+      
+      test('Convert 32g (invalid input unit)', function(done) {
+        chai.request(server)
+        .get('/api/convert')
+        .query({input: '32g'})
+        .end(function(err, res){
+        assert.equal(res.status,200);
+        assert.equal(res.body.initNum, 32);
+        assert.equal(res.body.initUnit, 'Invalid Unit');
+        })
+      done();
+      });
+      
+      test('Convert 3/7.2/4kg (invalid number)', function(done) {
+        chai.request(server)
+        .get('/api/convert')
+        .query({input: '3/7.2/4kg'})
+        .end(function(err, res){
+        assert.equal(res.status,200);
+        assert.equal(res.body.initNum, 'Invalid Number');
+        })
+        done();
+      });  
+      
+      test('Convert 3/7.2/4kilomegagram (invalid number and unit)', function(done) {
+        chai.request(server)
+        .get('/api/convert')
+        .query({input:'3/7.2/4kilomegagram'})
+        .end(function(err, res){
+        assert.equal(res.status,200)
+        assert.equal(res.body.initNum, 'Invalid Number and Unit')
+        })
         done();
       });
-  });
-  test("Convert an invalid input unit", (done) => {
-    chai
-      .request(server)
-      .get("/api/convert?input=32g")
-      .end((err, res) => {
-        const data = res.body;
-        assert.deepEqual({ error: "invalid unit" }, data);
+      
+      test('Convert kg (no number)', function(done) {
+        chai.request(server)
+        .get('/api/convert')
+        .query({input: 'kg'})
+        .end(function(err, res){
+        assert.equal(res.status, 200);
+        assert.equal(res.body.initNum, 1);
+        assert.equal(res.body.initUnit, 'kg');
+        assert.approximately(res.body.returnNum,2.20462, 0.1);
+        assert.equal(res.body.returnUnit, 'lbs');
+        })
         done();
       });
+      
+    });
+
   });
-  test("Convert an invalid number", (done) => {
-    chai
-      .request(server)
-      .get("/api/convert?input=3/7.2/4kg")
-      .end((err, res) => {
-        const data = res.body;
-        assert.deepEqual({ error: "invalid number" }, data);
-        done();
-      });
-  });
-  test("Convert an invalid number AND unit", (done) => {
-    chai
-      .request(server)
-      .get("/api/convert?input=3/7.2/4kilomemgram")
-      .end((err, res) => {
-        const data = res.body;
-        assert.deepEqual({ error: "invalid number and unit" }, data);
-        done();
-      });
-  });
-  test("Convert with no number", (done) => {
-    chai
-      .request(server)
-      .get("/api/convert?input=mi")
-      .end((err, res) => {
-        const data = res.body;
-        assert.equal(1.60934, data.returnNum);
-        assert.equal("km", data.returnUnit);
-        done();
-      });
-  });
+
 });
