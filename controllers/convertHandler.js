@@ -33,7 +33,7 @@ function ConvertHandler() {
       }      
       
     } else {
-      num = 'invalid number'
+      num = NaN
     }
 
 
@@ -50,7 +50,7 @@ function ConvertHandler() {
       
     
 
-    return [Number(num), str]
+    return [Number(num), str] 
   }
 
 
@@ -59,6 +59,10 @@ function ConvertHandler() {
     
     let result = breakInp(input)[0];
     // console.log('number rrrrrrrr '+ result)
+    if(isNaN(result) ){
+      result = 'invalid number'
+    }
+    
     return result;
   };
 

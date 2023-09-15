@@ -23,7 +23,8 @@ suite('Unit Tests', function(){
   });
 
   test('Double-fraction input (error)', function() {
-    assert.isNaN(convertHandler.getNum('3/2/3'));
+    //assert.isNaN(convertHandler.getNum('3/2/3'));
+    assert.strictEqual(convertHandler.getNum('3/2/3'), 'invalid number');
   });
 
   test('No numerical input provided (default to 1)', function() {
