@@ -5,7 +5,7 @@ function ConvertHandler() {
       let num
       let str
       if(inputText.search("[glmkGLML]") != -1){
-        num = inputText.slice(0, inputText.search("[glmkGLML]"));
+        num = inputText.slice(0, inputText.search("[a-zA-Z]"));
         str = inputText.slice(inputText.search("[glmkGLML]")); // for 5e2l scientific escape
       }else {
         num = inputText.slice(0);
