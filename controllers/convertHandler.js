@@ -1,57 +1,89 @@
-module.exports = class ConvertHandler {
-
-    constructor ( ) {
-      this.units = {
-        gal : [ 'gallons'   , 'l'   , 3.78541  ],
-        l   : [ 'liters'    , 'gal' , 0.26417  ],
-        kg  : [ 'kilograms' , 'lbs' , 2.20462  ],
-        lbs : [ 'pounds'    , 'kg'  , 0.453592 ],
-        mi  : [ 'miles'     , 'km'  , 1.60934  ],
-        km  : [ 'kilometers', 'mi'  , 0.621371 ]
-      };
-    }
-    
-    divideFraction ( input ) {
-      input = input.join( '' ).split( '/' );
-      return input.length <= 2
-              ? input.reduce( ( a,b ) => a / b )
-              : null;
-    }
-    
-    getNum ( input ) {
-      input = input.toLowerCase( ).match( /[^a-z]/gi ) || 1;
-      return input !== 1 ? this.divideFraction( input ) : 1;
-    };
-    
-    getUnit ( input ) {
-      input = input.toLowerCase().match( /[a-z]/gi );
-      return input
-            ? Object.keys( this.units ).includes( input.join( '' ) )
-              ? input.join( '' )
-              : null
-            : null;
-    };
-    
-    getReturnUnit ( initUnit ) {
-      initUnit = initUnit.toLowerCase( );
-      return this.units[ initUnit ][ 1 ];
+function ConvertHandler() {
+    this.getNum = function (input) {
+      // There is no unit; only number
+      if (!/[^\d\.\/ ]/i.test(input)) return Number(input);
+  
+      const idx = input.match(/[^\d\.\/ ]/i)["index"];
+      if (idx === 0) return 1;
+      if (input.match(/\//g) && input.match(/\//g).length > 1) return { error: "Invalid number" };
+      return eval(input.substr(0, idx));
     };
   
-    spellOutUnit ( unit ) {
-      return this.units[ unit ][ 0 ];
+    this.getUnit = function (input) {
+      if (!/[^\d\.\/ ]+/i.test(input)) return { error: "Invalid input unit" };
+      const units = {
+        gal: "gal",
+        lbs: "lbs",
+        mi: "mi",
+        l: "L",
+        kg: "kg",
+        km: "km",
+      };
+  
+      const idx = input.match(/[^\d\.\/ ]+/i)["index"];
+      const unit = input.substr(idx).toLowerCase();
+  
+      if (!units[unit]) return { error: "Invalid input unit" };
+  
+      return units[unit];
     };
-    
-    convert ( initNum,initUnit ) {
-      initUnit = initUnit.toLowerCase( );
-      return initNum * this.units[ initUnit ][ 2 ];
+  
+    this.getReturnUnit = function (initUnit) {
+      initUnit = initUnit.toLowerCase();
+      return {
+        gal: "L",
+        lbs: "kg",
+        mi: "km",
+        l: "gal",
+        kg: "lbs",
+        km: "mi",
+      }[initUnit];
     };
-    
-    getString ( initNum,initUnit,returnNum,returnUnit ) {
-      return { initNum, initUnit, returnNum, returnUnit,
-        string: initNum + ' ' + this.spellOutUnit( initUnit )
-          + ' converts to ' + returnNum.toFixed( 5 ) + ' '
-          + this.spellOutUnit( returnUnit )
-      }; 
+  
+    this.spellOutUnit = function (unit) {
+      return {
+        gal: "gallon",
+        lbs: "pound",
+        mi: "mile",
+        l: "litre",
+        kg: "kilogram",
+        km: "kilometer",
+      }[unit];
     };
-    
+  
+    this.convert = function (initNum, initUnit) {
+      initUnit = initUnit.toLowerCase();
+      const galToL = 3.78541;
+      const lbsToKg = 0.453592;
+      const miToKm = 1.60934;
+      switch (initUnit) {
+        case "gal":
+          result = initNum * galToL;
+          break;
+        case "lbs":
+          result = initNum * lbsToKg;
+          break;
+        case "mi":
+          result = initNum * miToKm;
+          break;
+        case "l":
+          result = initNum / galToL;
+          break;
+        case "kg":
+          result = initNum / lbsToKg;
+          break;
+        case "km":
+          result = initNum / miToKm;
+          break;
+      }
+      return Number(result.toFixed(5));
+    };
+  
+    this.getString = function (initNum, initUnit, returnNum, returnUnit) {
+      const spInitUnit = this.spellOutUnit(initUnit) + (initNum > 1 ? "s" : "");
+      const spReturnUnit = this.spellOutUnit(returnUnit) + (returnNum > 1 ? "s" : "");
+      return `${initNum} ${spInitUnit} converts to ${returnNum} ${spReturnUnit}`;
+    };
   }
+  
+  module.exports = ConvertHandler;
