@@ -26,14 +26,14 @@ function ConvertHandler() {
         
         const nominator = num.slice(0, num.indexOf("/"))
         const dnominator = num.slice( num.indexOf("/")+1)
-        num = nominator /dnominator
+        num = Number(nominator /dnominator)
       } else{
-        num = num
+        num = Number(num)
         
       }      
       
     } else {
-      num = NaN
+      num = 'invalid number'
     }
 
 
@@ -59,12 +59,7 @@ function ConvertHandler() {
     
     let result = breakInp(input)[0];
     
-    if(isNaN(result) ){
-      result = 'invalid number'
-    } else {
-      result = Number(result)
-    }
-    
+        
     return result;
   };
 
