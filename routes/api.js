@@ -30,7 +30,8 @@ module.exports = function (app) {
     }
     else if( isNaN(num) ){      
       console.log(num + ' ok num')
-      res.status(400).json({ error: 'invalid number' });
+      res.send('invalid number');
+      //res.status(400).json({ error: 'invalid number' });
     }
     else if( unit == 'invalid unit'){
       console.log(unit + ' ok unit')
