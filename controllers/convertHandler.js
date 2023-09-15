@@ -5,13 +5,14 @@ function ConvertHandler() {
       let num
       let str
       if(inputText.search("[a-zA-Z]") != -1){
-        num = inputText.slice(0, inputText.search("[a-zA-Z]"));
-        str = inputText.slice(inputText.search("[a-zA-Z]"));
+        num = inputText.slice(0, inputText.search("[glmkGLML]"));
+        str = inputText.slice(inputText.search("[glmkGLML]")); // for 5e2l scientific escape
       }else {
         num = inputText.slice(0);
       }
       
-          
+      console.log('nuuuuuuuummmmmmmmmm '+ num)
+      
       // number
       const regex = /^(\.)?\d+(\.|\.\d+)?(\/\d+(\.|\.\d+)?)?$/; // /^(\.)?\d+(\.|(\.\d+)?)+(\/\d+(\.|\.\d+)?)?$/
       // 1.2/2.2 true
