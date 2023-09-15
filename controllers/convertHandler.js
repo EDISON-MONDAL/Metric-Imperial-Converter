@@ -13,7 +13,7 @@ function ConvertHandler() {
     
         
     // number
-    const regex = /^(\.)?\d+(\.|(\.\d+)?(\/\d+(\.|\.\d+)?))?$/;
+    const regex = /^(\.)?\d+(\.|\.\d+)?(\/\d+(\.|\.\d+)?)?$/; // /^(\.)?\d+(\.|(\.\d+)?)+(\/\d+(\.|\.\d+)?)?$/
     // 1.2/2.2 true
     // 2/2.2/2 false
     // 1/2/3 false
@@ -22,17 +22,23 @@ function ConvertHandler() {
     // 5. true  
     // 5/5. true
     // 5/.5 false
-    // 5.5. false
-    // 5./5. false
+    // 5.5. false 
+    // 5./5. 
     // 5./5.5 false
-    // 5./5 false
+    // 5./5 
     // 2.2. false
     // 2.2.2 false
     if(!num){
       num =  1
     }else if(regex.test(num) == true){ 
-      
-      if(num.indexOf("/") != -1){
+      if(/\d+\.\/\d+\./.test(num) == true || /\d+\.\/\d+/.test(num) == true){
+
+        // 5./5. false
+        // 5./5  false
+
+        num = 'invalid number'
+      }
+      else if(num.indexOf("/") != -1){
         
         const nominator = num.slice(0, num.indexOf("/"))
         const dnominator = num.slice( num.indexOf("/")+1)
