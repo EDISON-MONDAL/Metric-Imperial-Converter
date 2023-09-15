@@ -1,91 +1,79 @@
 function ConvertHandler() {
-  function breakInp(inp){
-    
-    let breakPoint = inp.indexOf("l")
-    if(breakPoint>0){
-    breakPoint--
-    }
-    let num = inp.slice(0, breakPoint);
-    let str = inp.slice(inp.indexOf("l"));
 
-    return {num: num, str: str}
+  function breakInp(inp){
+    const inputText = inp.toLowerCase()  
+    let num
+    let str
+    if(inputText.search("[a-zA-Z]") != -1){
+      num = inputText.slice(0, inputText.search("[a-zA-Z]"));
+      str = inputText.slice(inputText.search("[a-zA-Z]"));
+    }else {
+      num = inputText.slice(0);
+    }
+    
+    
+    // number
+    const regex = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
+    // 1.2/2.2 true
+    // 2/2.2/2 false
+    // 1/2/3 false
+    // 1.2/2.2/2 false
+    if(!num){
+      num =  1
+    }else if(regex.test(num) == true){ 
+      
+      if(num.indexOf("/") != -1){
+        
+        const nominator = num.slice(0, num.indexOf("/"))
+        const dnominator = num.slice( num.indexOf("/")+1)
+        num = nominator /dnominator
+      } else{
+        num = num
+        
+      }      
+      
+    } else {
+      num = NaN
+    }
+
+
+
+    //string
+    if(str != "gal" && str != "lbs" && str != "mi" && str != "km" && str != "kg" && str != "l"){
+      str = 'invalid unit'
+    }
+
+    if( str == 'l'){
+      str = 'L'
+    }
+    
+      
+    
+
+    return [Number(num), str]
   }
 
 
   
   this.getNum = function(input) {
-    let result;
     
-    if( input.match(/\d+\.\d+|\d+\/\d+|\d+/) ){ 
-
-      if(input.match(/(\d+\/\d+\/\d+)|(\d+\/\d+\.\d+\/\d+)/)){ // more than one fraction 1/2/3  of 1/2.2/3
-        result = NaN
-      }
-      else if(input.match(/\d+\.\d+\/\d+|\d+\/\d+/)){ // 1.2/3 | 2/3
-
-        if(input.match(/\d+\.\d+\/\d+/)){ // 1.2/3
-
-          const fraction = input.match(/\d+\.\d+\/\d+/)
-          const nominator = fraction[0].slice(0, fraction[0].indexOf("/"))
-          const dnominator = fraction[0].slice(fraction[0].indexOf("/")+1)
-          return nominator / dnominator
-
-        }else {
-          const fraction = input.match(/\d+\/\d+/)
-          const nominator = fraction[0].slice(0, fraction[0].indexOf("/"))
-          const dnominator = fraction[0].slice(fraction[0].indexOf("/")+1)
-          return nominator / dnominator
-        }
-      } else if(input.match(/\d+\.\d+|\d+/)){
-        result = Number(input.match(/\d+\.\d+|\d+\/\d+|\d+/))
-      } else {
-        result = NaN
-      }
-      
-    }
-    else {
-      result = 1
-    }
-    
-
-    
-    
+    let result = breakInp(input)[0];
+    // console.log('number rrrrrrrr '+ result)
     return result;
   };
 
   
   this.getUnit = function(input) {
     let result;
-    const unitText = breakInp(input)['str']
-    
-    if(!input){
-      result = 'invalid unit'
-    }
-    else if( input.match(/(\d+\.\d+|\d+\/\d+|\d+)+(gal|GAL|mi|MI|km|KM|lbs|LBS|l|L|kg|KG)/) ){ 
-      
-      const data = input.match(/gal|GAL|mi|MI|km|KM|lbs|LBS|l|L|kg|KG/)[0]   
-      if(data == 'l' || data == 'L'){
-        result = data.toUpperCase()
-      } else {
-        result = data.toLowerCase()
-      }
-      
-    } else if( input=="gal" || input=="GAL" || input=="l" || input=="L" || input=="mi" || input=="MI" || input=="km" || input=="KM" || input=="lbs" || input=="LBS" || input=="kg" ||  input=="KG" ){
-      
-      if( input == 'l' || input == 'L'){
-        result = input.toUpperCase()
-      } else {
-        result = input.toLowerCase()
-      }
-      
-      
-    } else {
-      result = 'invalid unit'
-    }
+    result = breakInp(input)[1]
 
+    //console.log('unit tttttt '+ result)
     
-    return unitText;
+    
+    return result;
   };
+
+
   
   this.getReturnUnit = function(initUnit) {
     let result;
