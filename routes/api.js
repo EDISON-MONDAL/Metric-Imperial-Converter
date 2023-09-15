@@ -1,56 +1,40 @@
-/*
-*
-*
-*       Complete the API routing below
-*
-*
-*/
+"use strict";
 
-'use strict';
-
-const expect = require('chai').expect;
-const ConvertHandler = require('../controllers/convertHandler.js');
+const expect = require("chai").expect;
+const ConvertHandler = require("../controllers/convertHandler.js");
 
 module.exports = function (app) {
-  
-  const convertHandler = new ConvertHandler();
+  let convertHandler = new ConvertHandler();
 
-  app.route('/api/convert')
-    .get(function (req, res, next){
-      const input = req.query.input;
+  app.route("/api/convert").get((req, res) => {
+    let input = req.query.input;
 
-      const initNum = convertHandler.getNum(input);
-      const initUnit = convertHandler.getUnit(input);    
+    let initNum = convertHandler.getNum(input);
+    let initUnit = convertHandler.getUnit(input);
+    let returnNum = convertHandler.convert(initNum, initUnit);
+    let returnUnit = convertHandler.getReturnUnit(initUnit);
+    let toString = convertHandler.getString(
+      initNum,
+      initUnit,
+      returnNum,
+      returnUnit
+    );
 
-      res.body = {};
-      res.body.initNum = initNum;
-      res.body.initUnit = initUnit;
+    if (initNum === undefined && initUnit === undefined) {
+      res.send("invalid number and unit");
+    } else if (initUnit === undefined) {
+      res.send("invalid unit");
+    } else if (initNum === undefined) {
+      res.send("invalid number");
+    }
+    
+    let resObj = {};
 
-      if (res.body.initNum !== 'invalid input' && res.body.initUnit !== 'invalid input') {
-        res.body.returnNum = convertHandler.convert(initNum, initUnit);
-        res.body.returnUnit = convertHandler.getReturnUnit(initUnit);
-        res.body.string = convertHandler.getString(initNum, initUnit, res.body.returnNum, res.body.returnUnit);
-      }
-      next();
-    }, function(req, res) {
-      let response;
-      
-      if (res.body.initNum === 'invalid input' && res.body.initUnit === 'invalid input') {
-        response = Object.assign({}, res.body, { string: 'invalid number and unit' }); 
-      } else if (res.body.initNum === 'invalid input') {
-        response = Object.assign({}, res.body, { string: 'ivalid number' });
-      } else if (res.body.initUnit === 'invalid input') {
-        response = Object.assign({}, res.body, { string: 'invalid unit' });
-      } else {
-        response = {
-          initNum: res.body.initNum,
-          initUnit: res.body.initUnit,
-          returnNum: res.body.returnNum,
-          returnUnit: res.body.returnUnit,
-          string: res.body.string
-        }
-      }
-      
-      res.status(200).json(response);
-    });    
+    resObj["initNum"] = initNum;
+    resObj["initUnit"] = initUnit;
+    resObj["returnNum"] = returnNum;
+    resObj["returnUnit"] = returnUnit;
+    resObj["string"] = toString;
+    res.json(resObj);
+  });
 };

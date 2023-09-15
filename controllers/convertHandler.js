@@ -1,101 +1,158 @@
-/*
-*
-*
-*       Complete the handler logic below
-*       
-*       
-*/
-
 function ConvertHandler() {
-    this.getFirstLetterIndex = function(input) {
-      const regex = /[a-zA-Z]/;
-      return input.indexOf(input.match(regex));
-    }
-    this.getNum = function(input) {
+    let inputRegex = /[^a-zA-Z]+|[a-zA-Z]+/g;
+  
+    this.getNum = function (input) {
       let result;
-      const firstLetterIndex = this.getFirstLetterIndex(input);
+      result = input.match(/[.\d\/]+/g) || ["1"];
   
-      if (firstLetterIndex == 0) return 1;    
-      result = input.slice(0, firstLetterIndex);
+      let fractionInput = result[0].split('/');
+      if (fractionInput.length > 2) {
+        return undefined;
+      } else {
+        let num1 = fractionInput[0];
+        let num2 = fractionInput[1] || "1";
   
-      // check if input has double fraction
-      const secondFraction = result.indexOf('/', result.indexOf('/') + 1);
-      if (secondFraction > 0) result = 'invalid input';
-      
-      return result;
-    };
-    
-    this.getUnit = function(input) {
-      let result;
-      const validUnits = ['gal', 'l', 'mi', 'km', 'lbs', 'kg', 'GAL', 'L', 'MI', 'KM', 'LBS', 'KG'];
-      const firstLetterIndex = this.getFirstLetterIndex(input);
-  
-      if (firstLetterIndex < 0 ) return 'invalid input';
-      
-      const unit = input.slice(firstLetterIndex);
-      const validUnit = validUnits.includes(unit);
-      
-      validUnit ? result = unit : result = 'invalid input';
-      
-      return result;
-    };
-    
-    this.getReturnUnit = function(initUnit) {
-      const initUnitLowerCase = initUnit.toLowerCase();
-      const units = {
-        gal: 'l',
-        l: 'gal',
-        mi: 'km',
-        km: 'mi',
-        lbs: 'kg',
-        kg: 'lbs'
-      }
-      
-      return units[initUnitLowerCase];
-    };
-  
-    this.spellOutUnit = function(unit) {
-      const unitLowerCase = unit.toLowerCase();
-      const units = {
-        gal: 'gallon',
-        l: 'liter',
-        mi: 'mile',
-        km: 'kilometer',
-        lbs: 'pound',
-        kg: 'kilogram'
+        if (isNaN(num1) || isNaN(num2)) {
+          return undefined;
+        } else {
+          return result[0] = parseFloat(num1) / parseFloat(num2);
+        }
       }
   
-      return units[unitLowerCase];
     };
-    
-    this.convert = function(initNum, initUnit) {
+  
+    this.getUnit = function (input) {
+      let result;
+      result = input.match(/[a-zA-Z]+/g)[0].toLowerCase();
+  
+      let validunits = ['gal', 'l', 'mi', 'km','lbs', 'kg'];
+  
+      if (!validunits.includes(result)) {
+        return undefined;
+      } else {
+        if (result === 'l') {
+          return result.toUpperCase();
+        } else {
+          return result;
+        }
+      }
+  
+    };
+  
+    this.getReturnUnit = function (initUnit) {
+      let result;
+      let unit;
+  
+      if (initUnit != undefined) {
+        unit = initUnit.toLowerCase();
+      }
+  
+      switch (unit) {
+        case "gal":
+          result = "L";
+          break;
+        case "l":
+          result = "gal";
+          break;
+        case "lbs":
+          result = "kg";
+          break;
+        case "kg":
+          result = "lbs";
+          break;
+        case "mi":
+          result = "km";
+          break;
+        case "km":
+          result = "mi";
+          break;
+        default:
+          result = undefined;
+      }
+  
+      return result;
+    };
+  
+    this.spellOutUnit = function (unit) {
+      let result;
+      let units;
+  
+      if (unit != undefined) {
+        units = unit.toLowerCase();
+      }
+  
+      switch (units) {
+        case "gal":
+          result = "gallons";
+          break;
+        case "l":
+          result = "liters";
+          break;
+        case "lbs":
+          result = "pounds";
+          break;
+        case "kg":
+          result = "kilograms";
+          break;
+        case "mi":
+          result = "miles";
+          break;
+        case "km":
+          result = "kilometers";
+          break;
+        default:
+          result = "cant find";
+      }
+  
+      return result;
+    };
+  
+    this.convert = function (initNum, initUnit) {
       const galToL = 3.78541;
       const lbsToKg = 0.453592;
       const miToKm = 1.60934;
+      let result;
+      let unit;
   
-      const convertTable = {
-        gal: galToL,
-        l: 1 / galToL,
-        mi: miToKm,
-        km: 1 / miToKm,
-        lbs: lbsToKg,
-        kg: 1 / lbsToKg
-      };
-      
-      // round to 5 decimal digits
-      const result = Math.round(initNum * convertTable[initUnit.toLowerCase()] * 10**5) / 10**5;
+      if (initUnit != undefined) {
+        unit = initUnit.toLowerCase();
+      }
   
-      return result;
+      switch (unit) {
+        case "gal":
+          result = initNum * galToL;
+          break;
+        case "l":
+          result = initNum / galToL;
+          break;
+        case "lbs":
+          result = initNum * lbsToKg;
+          break;
+        case "kg":
+          result = initNum / lbsToKg;
+          break;
+        case "mi":
+          result = initNum * miToKm;
+          break;
+        case "km":
+          result = initNum / miToKm;
+          break;
+        default:
+          result = undefined;
+      }
+  
+      if (result != undefined) {
+        return parseFloat(result.toFixed(5));  
+      } else {
+        return undefined;
+      }
+     
     };
-    
-    this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-      const spelledeOutInitUnits = this.spellOutUnit(initUnit) + 's';
-      const spelledOutReturnUnits = this.spellOutUnit(returnUnit) + 's';
-      const result = `${initNum} ${spelledeOutInitUnits} converts to ${returnNum} ${spelledOutReturnUnits}`;
-      
-      return result;
-    };
   
+    this.getString = function (initNum, initUnit, returnNum, returnUnit) {
+      return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`;
+    };
   }
   
   module.exports = ConvertHandler;
+  
