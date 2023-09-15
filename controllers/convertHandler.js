@@ -30,7 +30,11 @@ function ConvertHandler() {
       // 2.2.2 false
       if(!num){
         num =  1
-      }else if(regex.test(num) == true){ 
+      }
+      else if( num == 0){
+        num = 'invalid number'
+      }
+      else if(regex.test(num) == true){ 
         if(/\d+\.\/\d+\./.test(num) == true || /\d+\.\/\d+/.test(num) == true){
   
           // 5./5. false
@@ -154,7 +158,26 @@ function ConvertHandler() {
       } else if( initUnit=="kg" ||  initUnit=="KG" ){
         result = parseFloat((initNum / lbsToKg).toFixed(5))
       }
-      
+
+
+
+      function areNumbersEqualWithTolerance(a, b, tolerance) {
+        return Math.abs(a - b) <= tolerance;
+    }
+    
+    const num1 = result;
+    const num2 = Math.round(result)
+    
+    const tolerance = 0.01; // Define your desired tolerance here
+    if (areNumbersEqualWithTolerance(num1, num2, tolerance)) {
+        //console.log(`The numbers are considered equal within the tolerance of ${tolerance}`);
+        result = Math.round(result)
+    } else {
+        //console.log(`The numbers are not considered equal within the tolerance of ${tolerance}`);
+        result = result
+    }
+
+
       return result;
     };
     
