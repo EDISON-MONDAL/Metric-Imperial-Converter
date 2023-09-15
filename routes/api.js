@@ -23,7 +23,7 @@ module.exports = function (app) {
 
 
     
-    if(unit == 'invalid unit' && isNaN(num) ){
+    if(unit == 'invalid unit' && num == 'invalid number' ){
       console.log(num + ' ok num ' + unit + ' ok unit')
       res.send('invalid number and unit');
       //res.status(400).json({ error: 'invalid number and unit' });
