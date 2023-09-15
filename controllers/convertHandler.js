@@ -11,13 +11,14 @@ function ConvertHandler() {
       num = inputText.slice(0);
     }
     
-    
+        
     // number
-    const regex = /^\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
+    const regex = /^(\.)?\d+(\.\d+)?(\/\d+(\.\d+)?)?$/;
     // 1.2/2.2 true
     // 2/2.2/2 false
     // 1/2/3 false
     // 1.2/2.2/2 false
+    // .5 true
     if(!num){
       num =  1
     }else if(regex.test(num) == true){ 
