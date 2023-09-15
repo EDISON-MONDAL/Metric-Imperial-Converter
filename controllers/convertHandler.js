@@ -13,7 +13,7 @@ function ConvertHandler() {
     
         
     // number
-    const regex = /^(\.)?\d+(\.)?(\d+)?(\/\d+(\.|\.\d+)?)?$/;
+    const regex = /^(\.)?\d+(\.|(\.\d+)?(\/\d+(\.|\.\d+)?))?$/;
     // 1.2/2.2 true
     // 2/2.2/2 false
     // 1/2/3 false
@@ -25,7 +25,7 @@ function ConvertHandler() {
     // 5.5. false
     // 5./5. false
     // 5./5.5 false
-    // 5./5
+    // 5./5 false
     // 2.2. false
     // 2.2.2 false
     if(!num){
