@@ -4,7 +4,7 @@ function ConvertHandler() {
       const inputText = inp.toLowerCase()  
       let num
       let str
-      if(inputText.search("[a-zA-Z]") != -1){
+      if(inputText.search("[glmkGLML]") != -1){
         num = inputText.slice(0, inputText.search("[glmkGLML]"));
         str = inputText.slice(inputText.search("[glmkGLML]")); // for 5e2l scientific escape
       }else {
