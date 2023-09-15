@@ -184,10 +184,9 @@ function ConvertHandler() {
       return result;
     };
     
-    this.getString = function(initNum, initUnit, returnNum, returnUnit) {
-      let result;
-  
-      //result = {initNum, initUnit, returnNum, returnUnit}
+    this.getString = function(initNum, inputSpellOutUnit, returnNum, outputUnitFullName) {
+      
+      result = initNum +" "+ inputSpellOutUnit + " converts to " + returnNum + " " + outputUnitFullName
       
       return result;
     };

@@ -19,7 +19,9 @@ module.exports = function (app) {
     const unit = convertHandler.getUnit(input);
     const returnNum = convertHandler.convert(num, unit);
     const returnUnit = convertHandler.getReturnUnit(unit);
-    const string = convertHandler.getString(num, unit, returnNum, returnUnit);
+    const inputUnitFullName = convertHandler.spellOutUnit(unit)
+    const outputUnitFullName = convertHandler.spellOutUnit(returnUnit)
+    const string = convertHandler.getString(num, inputUnitFullName, returnNum, outputUnitFullName);
 
 
     
