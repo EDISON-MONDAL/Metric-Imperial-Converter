@@ -1,76 +1,172 @@
-class ConvertHandler {
-  
-    constructor ( ) {
-      this.units = {
-        gal: {name: "gallons"},
-        l: {name: "liters"},
-        kg: {name: "kilograms"},
-        lbs: {name: "pounds"},
-        mi: {name: "miles"},
-        km: {name: "kilometers"}
+function ConvertHandler() {
+
+    function breakInp(inp){
+      const inputText = inp.toLowerCase()  
+      let num
+      let str
+      if(inputText.search("[a-zA-Z]") != -1){
+        num = inputText.slice(0, inputText.search("[a-zA-Z]"));
+        str = inputText.slice(inputText.search("[a-zA-Z]"));
+      }else {
+        num = inputText.slice(0);
       }
-    
-      this.unitsConversion = {
-        gal: {convertTo: "l", rate: 3.78541},
-        l: {convertTo: "gal", rate: 0.26417},
-        kg: {convertTo: "lbs", rate: 2.20462},
-        lbs: {convertTo: "kg", rate: 0.453592},
-        mi: {convertTo: "km", rate: 1.60934},
-        km: {convertTo: "mi", rate: 0.621371}
+      
+          
+      // number
+      const regex = /^(\.)?\d+(\.|\.\d+)?(\/\d+(\.|\.\d+)?)?$/; // /^(\.)?\d+(\.|(\.\d+)?)+(\/\d+(\.|\.\d+)?)?$/
+      // 1.2/2.2 true
+      // 2/2.2/2 false
+      // 1/2/3 false
+      // 1.2/2.2/2 false
+      // .5 true
+      // 5. true  
+      // 5/5. true
+      // 5/.5 false
+      // 5.5. false 
+      // 5./5. 
+      // 5./5.5 false
+      // 5./5 
+      // 2.2. false
+      // 2.2.2 false
+      if(!num){
+        num =  1
+      }else if(regex.test(num) == true){ 
+        if(/\d+\.\/\d+\./.test(num) == true || /\d+\.\/\d+/.test(num) == true){
+  
+          // 5./5. false
+          // 5./5  false
+  
+          num = 'invalid number'
+        }
+        else if(num.indexOf("/") != -1){
+          
+          const nominator = num.slice(0, num.indexOf("/"))
+          const dnominator = num.slice( num.indexOf("/")+1)
+          num = Number(nominator /dnominator)
+        } else{
+          num = Number(num)
+          
+        }      
+        
+      } else {
+        num = 'invalid number'
       }
-    }
-     
-    getNum(input) {
-      input = input.toLowerCase()
-      const regEx =  /[a-z]/
-      input = input.split(regEx)
-      const divides  = input[0].match(/\//g)
+  
+  
+  
+      //string
+      if(str != "gal" && str != "lbs" && str != "mi" && str != "km" && str != "kg" && str != "l"){
+        str = 'invalid unit'
+      }
+  
+      if( str == 'l'){
+        str = 'L'
+      }
       
-      input = eval(input[0])
-  
-      // double divide
-      if (divides !== null && divides.length > 1) 
-        input = null
+        
       
-      // default
-      if (input === undefined)
-        input = 1
   
-      return input
+      return [num, str] 
     }
-    
-    getUnit(input) {
-      input = input.toLowerCase()
-      input = input.split(/([A-Za-z]+)/)
-      input = input[1]
   
-      // invalid unit
-      if (!this.units.hasOwnProperty(input))
-        input = null
+  
+    
+    this.getNum = function(input) {
       
-      return input
-    }
-    
-    getReturnUnit(initUnit) {
-      initUnit = initUnit.toLowerCase()
-      return this.unitsConversion[initUnit].convertTo
-    }
+      let result = breakInp(input)[0];
+      
+          
+      return result;
+    };
   
-    spellOutUnit(unit) {
-      unit = unit.toLowerCase()
-      return this.units[unit].name
-    }
     
-    convert(initNum, initUnit) {
-      initUnit = initUnit.toLowerCase()
-      return Number((initNum * this.unitsConversion[initUnit].rate).toFixed(5))
-    }
+    this.getUnit = function(input) {
+      let result;
+      result = breakInp(input)[1]
   
-    getString(initNum,initUnit,returnNum,returnUnit) {
-      return {initNum, initUnit, returnNum, returnUnit,
-        string: initNum + " " + this.spellOutUnit(initUnit)
-          + " converts to " + returnNum.toFixed(5) + " " + this.spellOutUnit(returnUnit)}
-    }    
+      //console.log('unit tttttt '+ result)
+      
+      
+      return result;
+    };
+  
+  
+    
+    this.getReturnUnit = function(initUnit) {
+      let result;
+  
+      if( initUnit=="gal" || initUnit=="GAL" ){
+        result = 'L'
+      } else if( initUnit=="l" || initUnit=="L" ){
+        result = 'gal'
+      } else if( initUnit=="mi" || initUnit=="MI"  ){
+        result = 'km'
+      } else if ( initUnit=="km" || initUnit=="KM" ){
+        result = 'mi'
+      } else if ( initUnit=="lbs" || initUnit=="LBS" ){
+        result = 'kg'
+      } else if( initUnit=="kg" ||  initUnit=="KG" ){
+        result = 'lbs'
+      }
+          
+      return result;
+    };
+  
+    this.spellOutUnit = function(unit) {
+      let result;
+  
+      if( unit=="gal" || unit=="GAL" ){
+        result = 'gallons'
+      } else if( unit=="l" || unit=="L" ){
+        result = 'liters'
+      } else if( unit=="mi" || unit=="MI"  ){
+        result = 'miles'
+      } else if ( unit=="km" || unit=="KM" ){
+        result = 'kilometers'
+      } else if ( unit=="lbs" || unit=="LBS" ){
+        result = 'pounds'
+      } else if( unit=="kg" ||  unit=="KG" ){
+        result = 'kilograms'
+      }
+      
+      return result;
+    };
+    
+    this.convert = function(initNum, initUnit) {
+      const initNumParsed = Number(initNum)
+  
+      const galToL = 3.78541;
+      const lbsToKg = 0.453592;
+      const miToKm = 1.60934;
+      let result;
+  
+      
+      if( initUnit=="gal" || initUnit=="GAL" ){
+        result = parseFloat((galToL * initNum).toFixed(5))
+      } else if( initUnit=="l" || initUnit=="L" ){
+        result = parseFloat((initNum / galToL).toFixed(5))
+      } else if( initUnit=="mi" || initUnit=="MI"  ){
+        result = parseFloat((miToKm * initNum).toFixed(5))
+      } else if ( initUnit=="km" || initUnit=="KM" ){
+        result = parseFloat((initNum / miToKm).toFixed(5))
+      } else if ( initUnit=="lbs" || initUnit=="LBS" ){
+        result = parseFloat((lbsToKg * initNum).toFixed(5))
+      } else if( initUnit=="kg" ||  initUnit=="KG" ){
+        result = parseFloat((initNum / lbsToKg).toFixed(5))
+      }
+      
+      return result;
+    };
+    
+    this.getString = function(initNum, initUnit, returnNum, returnUnit) {
+      let result;
+  
+      //result = {initNum, initUnit, returnNum, returnUnit}
+      
+      return result;
+    };
+    
   }
   
-  module.exports = ConvertHandler
+  module.exports = ConvertHandler;
+  
